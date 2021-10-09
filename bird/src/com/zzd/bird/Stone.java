@@ -1,0 +1,40 @@
+package com.zzd.bird;
+
+import java.awt.*;
+import java.util.Random;
+
+public class Stone extends FlyingObject implements Enemy{
+
+    //需要一个状态属性，代表活着还是被撞了，
+    //把鸟的状态status 扩大给父类，这样所有的FlyingObject就都有了
+
+    Bird bird;
+
+    public Stone(){
+        //给x y width 和 height 赋值
+        width = Config.FOOD_SIZE;
+        height = Config.FOOD_SIZE;
+        Random ran = new Random();
+        y = ran.nextInt(Config.FRAME_HEIGHT-height);
+        x = 0;
+    }
+
+    @Override
+    public void catchBird(Bird bird) {
+        this.bird=bird;
+    }
+
+    @Override
+    public void paintSelf(Graphics g) {
+        g.drawImage(food_stone, x, y, width, height, null);
+    }
+
+    @Override
+    public void moveAuto() {
+        if(bird!=null && bird.y>this.y && bird.y<this.y+this.height){
+            this.x+=Config.WALL_SPEED*5;
+        }else{
+            this.x+=Config.WALL_SPEED*2;
+        }
+    }
+}
